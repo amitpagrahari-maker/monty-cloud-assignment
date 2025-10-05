@@ -1,0 +1,5 @@
+FROM localstack/localstack:latest
+
+RUN pip install pytest boto3 moto[boto3]==5.0.10 awscli-local
+WORKDIR /app
+COPY . /app

@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    build:
+      context: .
+      dockerfile: Dockerfile.localstack
+    ports:
+      - "4566:4566"  # Edge port
+    environment:
+      - SERVICES=lambda,s3,dynamodb,apigateway,iam
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+      - BUCKET_NAME=images-bucket
+      - TABLE_NAME=images-metadata
+      - DYNAMODB_ENDPOINT_URL=http://localstack:4566
+      - S3_ENDPOINT_URL=http://localstack:4566
+    volumes:
+      - ./handler.py:/app/handler.py:ro
+      - ./tests:/app/tests:ro
+      - ./setup-localstack.sh:/app/setup-localstack.sh:ro
+      - ./logs:/var/lib/localstack/logs
+      - /var/run/docker.sock:/var/run/docker.sock 
+      - ./setup-localstack.sh:/app/setup-localstack.sh:cached
+    command: >
+      sh -c "pip install awscli-local && localstack start"

@@ -1,0 +1,5 @@
+pytest
+boto3
+moto[boto3]==5.0.10
+pytest-mock
+requests
