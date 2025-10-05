@@ -52,14 +52,6 @@ docker-compose up -d
 ###  🧩 4 Setup AWS Services and Lambda Functions
 
 ```bash
-docker-compose down
-docker-compose build --no-cache
-docker-compose up -d
-```
-
-###  🧩 4 Setup AWS Services and Lambda Functions
-
-```bash
 docker exec -it localstack sh /app/setup-localstack.sh
 ```
 
